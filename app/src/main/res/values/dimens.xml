@@ -1,0 +1,18 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="activity_button_margin">16dp</dimen>
+    <dimen name="activity_button_height">40dp</dimen>
+    <dimen name="activity_progressbar">30dp</dimen>
+    <dimen name="activity_button_width">100dp</dimen>
+    <dimen name="activity_alert_height">60dp</dimen>
+    <dimen name="activity_text_size">20sp</dimen>
+    <dimen name="alert_padding">20dp</dimen>
+    <dimen name="alert_text_size">18sp</dimen>
+    <dimen name="padding_list">10sp</dimen>
+    <dimen name="margin_list_card">5dp</dimen>
+    <dimen name="list_desc_text_size">14sp</dimen>
+    <dimen name="list_image_width">120sp</dimen>
+    <dimen name="list_image_height">80sp</dimen>
+</resources>
