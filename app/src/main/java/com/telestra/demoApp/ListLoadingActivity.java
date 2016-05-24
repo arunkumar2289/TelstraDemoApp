@@ -6,11 +6,9 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.ListView;
 import android.widget.ProgressBar;
 
 import com.google.gson.Gson;
-import com.telestra.demoApp.Adapter.DetailsListAdapter;
 import com.telestra.demoApp.Adapter.MyRecyclerViewAdapter;
 import com.telestra.demoApp.Dialog.NoNetworkConnection;
 import com.telestra.demoApp.Pojo.ImageData;
@@ -21,18 +19,17 @@ import com.telestra.demoApp.Util.Util;
 
 import java.util.List;
 
-public class SplashActivity extends AppCompatActivity implements DataDownload {
+public class ListLoadingActivity extends AppCompatActivity implements DataDownload {
 
-    ProgressBar loadingURL;
+    private ProgressBar loadingURL;
 
-    Util util;
+    private  RecyclerView mRecyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_splash);
-        util = new Util(this);
-        if (util.isNetworkAvailable()) {
+        setContentView(R.layout.activity_list_loading);
+        if (Util.isNetworkAvailable(this)) {
             loadJSONFromUrl();
         } else {
             new NoNetworkConnection(this, getString(R.string.alert_no_network_title), getString(R.string.alert_no_network_text)).show();
@@ -50,6 +47,11 @@ public class SplashActivity extends AppCompatActivity implements DataDownload {
     @Override
     public void receivedData(String responseData) {
         findViewById(R.id.refreshButton).setClickable(true);
+        mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
+        mRecyclerView.setHasFixedSize(true);
+        final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        mRecyclerView.setLayoutManager(layoutManager);
         loadingURL.setVisibility(View.GONE);
         if (responseData != null && responseData.length() > 0) {
             ImageData listOfData = new Gson().fromJson(responseData, ImageData.class);
@@ -67,14 +69,6 @@ public class SplashActivity extends AppCompatActivity implements DataDownload {
     }
 
     private void detailsListView(List<ImageDesc> rows) {
-       /* ListView detailsList = (ListView) findViewById(R.id.detailsListView);
-        detailsList.setAdapter(new DetailsListAdapter(this, rows));*/
-
-        RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
-        mRecyclerView.setHasFixedSize(true);
-        final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setAdapter(new MyRecyclerViewAdapter(rows,this));
     }
 

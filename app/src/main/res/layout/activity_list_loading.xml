@@ -2,14 +2,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ProgressBar
-        android:id="@+id/progressBar1"
-        style="?android:attr/progressBarStyleLarge"
-        android:layout_width="@dimen/activity_progressbar"
-        android:layout_height="@dimen/activity_progressbar"
-        android:visibility="invisible"
-        android:layout_centerInParent="true"
-        android:layout_centerHorizontal="true" />
+
     <Button
         android:id="@+id/refreshButton"
         android:layout_marginTop="@dimen/activity_button_margin"
@@ -19,15 +12,19 @@
         android:text="@string/refresh_button"
         android:onClick="refreshListView"
         android:layout_height="@dimen/activity_button_height" />
- <!--<ListView
-     android:id="@+id/detailsListView"
-     android:layout_width="match_parent"
-     android:layout_below="@+id/refreshButton"
-     android:layout_height="wrap_content"/>-->
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/my_recycler_view"
         android:layout_width="match_parent"
         android:layout_below="@+id/refreshButton"
         android:layout_height="match_parent"/>
+
+    <ProgressBar
+        android:id="@+id/progressBar1"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="@dimen/activity_progressbar"
+        android:layout_height="@dimen/activity_progressbar"
+        android:visibility="invisible"
+        android:layout_centerInParent="true"
+        android:layout_centerHorizontal="true" />
 </RelativeLayout>
