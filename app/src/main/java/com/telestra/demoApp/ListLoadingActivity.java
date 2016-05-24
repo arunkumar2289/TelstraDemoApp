@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 
@@ -17,13 +18,14 @@ import com.telestra.demoApp.Util.AsyncWebService;
 import com.telestra.demoApp.Util.DataDownload;
 import com.telestra.demoApp.Util.Util;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ListLoadingActivity extends AppCompatActivity implements DataDownload {
 
     private ProgressBar loadingURL;
 
-    private  RecyclerView mRecyclerView;
+    private MyRecyclerViewAdapter recycleAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,11 +49,13 @@ public class ListLoadingActivity extends AppCompatActivity implements DataDownlo
     @Override
     public void receivedData(String responseData) {
         findViewById(R.id.refreshButton).setClickable(true);
-        mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
+        RecyclerView mRecyclerView= (RecyclerView) findViewById(R.id.my_recycler_view);
         mRecyclerView.setHasFixedSize(true);
-        final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(layoutManager);
+        recycleAdapter = new MyRecyclerViewAdapter();
+        mRecyclerView.setAdapter(recycleAdapter);
         loadingURL.setVisibility(View.GONE);
         if (responseData != null && responseData.length() > 0) {
             ImageData listOfData = new Gson().fromJson(responseData, ImageData.class);
@@ -68,12 +72,22 @@ public class ListLoadingActivity extends AppCompatActivity implements DataDownlo
             actionBar.setTitle(title);
     }
 
-    private void detailsListView(List<ImageDesc> rows) {
-        mRecyclerView.setAdapter(new MyRecyclerViewAdapter(rows,this));
+    private void detailsListView(List<ImageDesc> descRows) {
+        recycleAdapter.updateList(getTableLists(descRows));
     }
 
     public void refreshListView(View v) {
         findViewById(R.id.refreshButton).setClickable(false);
         loadJSONFromUrl();
+    }
+
+    private List<ImageDesc> getTableLists(List<ImageDesc> descRows){
+        List<ImageDesc>imageDescServer = new ArrayList<>();
+        for(ImageDesc data : descRows){
+            if(data.getImageHref()!=null||data.getDescription()!=null||data.getTitle()!=null){
+                imageDescServer.add(data);
+            }
+        }
+        return imageDescServer;
     }
 }

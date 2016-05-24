@@ -12,6 +12,7 @@ import com.squareup.picasso.Picasso;
 import com.telestra.demoApp.Pojo.ImageDesc;
 import com.telestra.demoApp.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MyRecyclerViewAdapter extends RecyclerView
@@ -24,9 +25,9 @@ public class MyRecyclerViewAdapter extends RecyclerView
 
     public static class DataObjectHolder extends RecyclerView.ViewHolder {
 
-        TextView title;
-        TextView desc;
-        ImageView dataImage;
+        private TextView title;
+        private TextView desc;
+        private ImageView dataImage;
 
         public DataObjectHolder(View itemView) {
             super(itemView);
@@ -38,15 +39,20 @@ public class MyRecyclerViewAdapter extends RecyclerView
     }
 
 
-    public MyRecyclerViewAdapter(List<ImageDesc> myDataset,Context context) {
-        mDataset = myDataset;
-        this.context = context;
+    public MyRecyclerViewAdapter() {
+        mDataset = new ArrayList<>();
+    }
+
+    public void updateList(List<ImageDesc> data) {
+        mDataset = data;
+        notifyDataSetChanged();
     }
 
     @Override
     public DataObjectHolder onCreateViewHolder(ViewGroup parent,
                                                int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
+        context = parent.getContext();
+        View view = LayoutInflater.from(context)
                 .inflate(R.layout.list_item, parent, false);
 
         return new DataObjectHolder(view);

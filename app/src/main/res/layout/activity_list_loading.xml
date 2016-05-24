@@ -7,7 +7,7 @@
         android:id="@+id/refreshButton"
         android:layout_marginTop="@dimen/activity_button_margin"
         android:layout_width="@dimen/activity_button_width"
-       android:layout_alignParentRight="true"
+        android:layout_alignParentRight="true"
         android:layout_marginRight="@dimen/activity_button_margin"
         android:text="@string/refresh_button"
         android:onClick="refreshListView"
