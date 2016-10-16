@@ -38,6 +38,7 @@ public class ListLoadingActivity extends AppCompatActivity implements DataDownlo
         }
     }
 
+    //Used to initialize the screen
     private void initialScreen() {
         RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
         mRecyclerView.setHasFixedSize(true);
@@ -68,21 +69,26 @@ public class ListLoadingActivity extends AppCompatActivity implements DataDownlo
         }
     }
 
+    //Used to change title of actionbar
     private void changeActionBarTitle(String title) {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null)
             actionBar.setTitle(title);
     }
 
+    //Update the recyclerview adapter
     private void detailsListView(List<ImageDesc> descRows) {
         recycleAdapter.updateList(getTableLists(descRows));
     }
 
+
+    //will call the load function to get data from server
     public void refreshListView(View v) {
         findViewById(R.id.refreshButton).setClickable(false);
         loadJSONFromUrl();
     }
 
+    //Get list of Imade from given row list
     private List<ImageDesc> getTableLists(List<ImageDesc> descRows) {
         List<ImageDesc> imageDescServer = new ArrayList<>();
         for (ImageDesc data : descRows) {
