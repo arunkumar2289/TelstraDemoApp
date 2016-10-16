@@ -15,16 +15,13 @@ import com.telestra.demoApp.R;
  */
 public class NoNetworkConnection  extends Dialog implements View.OnClickListener{
 
-    Context context; //Context for the dialog
+    private String header; //Header  for the alert dialog
 
-    String header; //Header  for the alert dialog
-
-    String message;  //Message  for the alert dialog
+    private String message;  //Message  for the alert dialog
 
    //Constructor for this class
     public NoNetworkConnection(Context context,String header,String message) {
         super(context);
-        this.context = context;
         this.header = header;
         this.message = message;
 

@@ -22,9 +22,9 @@ import java.net.URLConnection;
 public class AsyncWebService  {
 
 
-    DataDownload interfaceData;  //Interface used to send data
+    private DataDownload interfaceData;  //Interface used to send data
 
-    Context context; //Context from activity
+    private Context context; //Context from activity
 
 
     //Constructor class
@@ -36,7 +36,7 @@ public class AsyncWebService  {
     }
 
     //Async task for GET method
-    public class AsyncWebServiceTask extends AsyncTask<String,String,String>{
+    private class AsyncWebServiceTask extends AsyncTask<String,String,String>{
         @Override
         protected String doInBackground(String... params) {
             InputStream inputStream;
@@ -52,7 +52,7 @@ public class AsyncWebService  {
                 httpConn.setInstanceFollowRedirects(true);
                 httpConn.setRequestMethod("GET");
                 httpConn.connect();
-
+                httpConn.setConnectTimeout(15000);
                 resCode = httpConn.getResponseCode();
                 if (resCode == HttpURLConnection.HTTP_OK) {
                     inputStream = httpConn.getInputStream();

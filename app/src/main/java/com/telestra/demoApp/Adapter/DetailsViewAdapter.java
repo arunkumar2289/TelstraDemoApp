@@ -15,21 +15,20 @@ import com.telestra.demoApp.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MyRecyclerViewAdapter extends RecyclerView
-        .Adapter<MyRecyclerViewAdapter
-        .DataObjectHolder> {
+public class DetailsViewAdapter extends RecyclerView
+        .Adapter<DetailsViewAdapter.ImageDetailsHolder> {
 
     private List<ImageDesc> mDataset; //List of Data from server
 
     private Context context; //Context from activity
 
-    public static class DataObjectHolder extends RecyclerView.ViewHolder {
+    public static class ImageDetailsHolder extends RecyclerView.ViewHolder {
 
         private TextView title;
         private TextView desc;
         private ImageView dataImage;
 
-        public DataObjectHolder(View itemView) {
+        public ImageDetailsHolder(View itemView) {
             super(itemView);
             title = (TextView) itemView.findViewById(R.id.title);
             desc = (TextView) itemView.findViewById(R.id.desc);
@@ -39,7 +38,7 @@ public class MyRecyclerViewAdapter extends RecyclerView
     }
 
 
-    public MyRecyclerViewAdapter() {
+    public DetailsViewAdapter() {
         mDataset = new ArrayList<>();
     }
 
@@ -49,17 +48,17 @@ public class MyRecyclerViewAdapter extends RecyclerView
     }
 
     @Override
-    public DataObjectHolder onCreateViewHolder(ViewGroup parent,
-                                               int viewType) {
+    public ImageDetailsHolder onCreateViewHolder(ViewGroup parent,
+                                                 int viewType) {
         context = parent.getContext();
         View view = LayoutInflater.from(context)
                 .inflate(R.layout.list_item, parent, false);
 
-        return new DataObjectHolder(view);
+        return new ImageDetailsHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(DataObjectHolder holder, int position) {
+    public void onBindViewHolder(ImageDetailsHolder holder, int position) {
         holder.title.setText(mDataset.get(position).getTitle());
         holder.desc.setText(mDataset.get(position).getDescription());
         Picasso

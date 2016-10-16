@@ -5,12 +5,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 
 import com.google.gson.Gson;
-import com.telestra.demoApp.Adapter.MyRecyclerViewAdapter;
+import com.telestra.demoApp.Adapter.DetailsViewAdapter;
 import com.telestra.demoApp.Dialog.NoNetworkConnection;
 import com.telestra.demoApp.Pojo.ImageData;
 import com.telestra.demoApp.Pojo.ImageDesc;
@@ -25,12 +24,13 @@ public class ListLoadingActivity extends AppCompatActivity implements DataDownlo
 
     private ProgressBar loadingURL;
 
-    private MyRecyclerViewAdapter recycleAdapter;
+    private DetailsViewAdapter recycleAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_loading);
+        initialScreen();
         if (Util.isNetworkAvailable(this)) {
             loadJSONFromUrl();
         } else {
@@ -38,6 +38,15 @@ public class ListLoadingActivity extends AppCompatActivity implements DataDownlo
         }
     }
 
+    private void initialScreen() {
+        RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
+        mRecyclerView.setHasFixedSize(true);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        mRecyclerView.setLayoutManager(layoutManager);
+        recycleAdapter = new DetailsViewAdapter();
+        mRecyclerView.setAdapter(recycleAdapter);
+    }
 
     private void loadJSONFromUrl() {
         findViewById(R.id.refreshButton).setClickable(false);
@@ -49,13 +58,6 @@ public class ListLoadingActivity extends AppCompatActivity implements DataDownlo
     @Override
     public void receivedData(String responseData) {
         findViewById(R.id.refreshButton).setClickable(true);
-        RecyclerView mRecyclerView= (RecyclerView) findViewById(R.id.my_recycler_view);
-        mRecyclerView.setHasFixedSize(true);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        mRecyclerView.setLayoutManager(layoutManager);
-        recycleAdapter = new MyRecyclerViewAdapter();
-        mRecyclerView.setAdapter(recycleAdapter);
         loadingURL.setVisibility(View.GONE);
         if (responseData != null && responseData.length() > 0) {
             ImageData listOfData = new Gson().fromJson(responseData, ImageData.class);
@@ -81,10 +83,10 @@ public class ListLoadingActivity extends AppCompatActivity implements DataDownlo
         loadJSONFromUrl();
     }
 
-    private List<ImageDesc> getTableLists(List<ImageDesc> descRows){
-        List<ImageDesc>imageDescServer = new ArrayList<>();
-        for(ImageDesc data : descRows){
-            if(data.getImageHref()!=null||data.getDescription()!=null||data.getTitle()!=null){
+    private List<ImageDesc> getTableLists(List<ImageDesc> descRows) {
+        List<ImageDesc> imageDescServer = new ArrayList<>();
+        for (ImageDesc data : descRows) {
+            if (data.getImageHref() != null || data.getDescription() != null || data.getTitle() != null) {
                 imageDescServer.add(data);
             }
         }
